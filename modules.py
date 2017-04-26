@@ -1,7 +1,15 @@
 import json
 
+def ngram(sequence, n):
+    output_list = []
+    for i in range(len(sequence) - n + 1):
+        output = sequence[i:i + n]
+        output = "".join(output)
+        output_list.append(output)
+    return output_list
+
 def extract_British_from_json():
-    f = open('jawiki-country.json', 'r')
+    f = open('data/jawiki-country.json', 'r')
     line = f.readline()
     while line:
         json_dict = json.loads(line)
@@ -12,7 +20,7 @@ def extract_British_from_json():
     return ""
 
 def read_mecab():
-    f = open('neko.txt.mecab', 'r')
+    f = open('data/neko.txt.mecab', 'r')
     lines = f.readlines()
     morphologies = []
     sentence = []
