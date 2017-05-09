@@ -11,8 +11,8 @@ def substract_text(morphs):
             text += morph.surface
     return text
 
-def contains_word(chunk, word):
-    return "pos: " + word in str(chunk)
+def contains_pos(chunk, pos):
+    return "pos: " + pos in str(chunk)
 
 if __name__ == '__main__':
     sentences = read_cabocha_chunk()
@@ -20,7 +20,7 @@ if __name__ == '__main__':
     for sentence in sentences:
         for chunk in sentence:
             if chunk.dst != -1:
-                if contains_word(chunk, "名詞") and contains_word(sentence[chunk.dst], "動詞"):
+                if contains_pos(chunk, "名詞") and contains_pos(sentence[chunk.dst], "動詞"):
                     srcs_text = substract_text(chunk.morphs)
                     dst_text = substract_text(sentence[chunk.dst].morphs)
                     concatenated_chunks.append(srcs_text + '\t' + dst_text)
