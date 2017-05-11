@@ -26,19 +26,46 @@ def contains_pos(chunk, pos):
     return "pos: " + pos in str(chunk)
 
 if __name__ == '__main__':
-    fout = open('data/46.txt', 'w')
+    fout = open('data/47.txt', 'w')
     sentences = read_cabocha_chunk()
     ans_dict = {}
     for sentence in sentences:
+        tmp = {}
+        t = {}
         for chunk in sentence:
             if chunk.dst != -1:
                 if contains_pos(chunk, "助詞") and contains_pos(sentence[chunk.dst], "動詞"):
                     verb = find_base_of_pos(sentence[chunk.dst].morphs, "動詞")
-                    list_of_tuple = find_base_of_pos(chunk.morphs, "助詞")
-                    if ans_dict.get(verb) is not None:
-                        ans_dict[verb] += list_of_tuple
+                    if tmp.get(verb) is not None:
+                        tmp[verb].append(chunk)
                     else:
-                        ans_dict[verb] = list_of_tuple
+                        tmp[verb] = [chunk]
+        new_tmp = {}
+        for key, vals in tmp.items():
+            flag = False
+            unko = ""
+            kuso = []
+            for i in range(len(vals)):
+                chinko = find_base_of_pos(vals[i].morphs, "助詞")
+                more_flag = False
+
+                for j in range(len(vals[i].morphs)):
+                    if vals[i].morphs[j].pos1 == "サ変接続" and j != len(vals[i].morphs)-1:
+                        if vals[i].morphs[j+1].base == "を":
+                            flag = True
+                            more_flag = True
+                            unko = vals[i].morphs[j].base + vals[i].morphs[j+1].base
+
+                if not more_flag:
+                    kuso += chinko
+            if flag:
+                if kuso != []:
+                    new_tmp[unko+key] = kuso
+        for key, val in new_tmp.items():
+            if ans_dict.get(key) is not None:
+                ans_dict[key] += val
+            else:
+                ans_dict[key] = val
     for key, val in ans_dict.items():
         sorted_val = sorted(val, key=lambda x: x[0])
         morphs, all_morphs = [], []
