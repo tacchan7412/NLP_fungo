@@ -87,3 +87,16 @@ def read_cabocha_chunk():
             chunk.morphs.append(morph)
     f.close()
     return sentences
+
+def get_sentences_of_English():
+    f = open('data/nlp.txt', 'r')
+    text = f.read()
+    last_letters = [':', ';', '.', '?', '!']
+    ans_text = text[0]
+    for i in range(1, len(text)-1):
+        if text[i-1] in last_letters and text[i] == ' ' and text[i+1].isupper():
+            ans_text += '\n'
+        else:
+            ans_text += text[i]
+    f.close()
+    return ans_text
