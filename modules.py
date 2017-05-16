@@ -100,3 +100,9 @@ def get_sentences_of_English():
             ans_text += text[i]
     f.close()
     return ans_text
+
+def get_words_of_English():
+    sentences = get_sentences_of_English()
+    _sentences = sentences.replace(".\n", ".\n\n", len(sentences))
+    words = _sentences.replace(" ", "\n", len(_sentences))
+    return words
