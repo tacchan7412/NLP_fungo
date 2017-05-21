@@ -22,6 +22,6 @@ if __name__ == '__main__':
             srcs_text = extract_text(chunk.morphs)
             dst_text = extract_text(sentences[i][chunk.dst].morphs)
             if srcs_text != "" and dst_text != "":
-                fout.write("\t"+srcs_text+" -> "+dst_text+";\n")
+                fout.write("\t"+'"'+srcs_text+'"'+" -> "+'"'+dst_text+'"'+";\n")
     fout.write("}")
     fout.close()
