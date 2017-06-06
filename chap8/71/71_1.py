@@ -5,7 +5,7 @@ sys.path.append(os.getcwd())
 import codecs
 
 f = codecs.open('data/stop_list.txt', 'r', 'latin_1')
-stop_list = list(map(lambda x:x.replace('\n',''), f.readlines()))
+stop_list = [x[:-1] for x in f.readlines()]
 f.close()
 
 def isinStopList(word):
