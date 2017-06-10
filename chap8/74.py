@@ -1,4 +1,6 @@
-#!/usr/bin/env python
+# coding: utf-8
+import os, sys
+sys.path.append(os.getcwd())
 
 import codecs
 import collections
@@ -50,7 +52,7 @@ if __name__ == "__main__":
     for t, features in enumerate(features_list):
         update(W, features[1:], float(features[0]), eta0 * (etan**t))
 
-    text = 'i had a great day while having a trip .'
+    text = 'i do not care you , and i would be hating you'
     X_test = []
     for word in text.split():
         word = stemmer.stem(word)
@@ -59,11 +61,11 @@ if __name__ == "__main__":
 
     a = sum([W[x] for x in X_test])
     predict = sigmoid(a)
-    predict = (predict * 2) - 1
-    if predict > 0:
+    if predict > 0.5:
         predictlabel = "+1"
-    elif predict < 0:
+    elif predict < 0.5:
         predictlabel = "-1"
+        predict = 1 - predict
     else:
         predictlabel = "0"
     print("label",predictlabel,"\tpredict:",predict)
