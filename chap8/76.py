@@ -58,26 +58,12 @@ if __name__ == "__main__":
     for t, features in enumerate(features_list):
         update(W, features[1:], float(features[0]), eta0 * (etan**t))
 
-    Y_pred = []
-    for X in X_test:
+    f_out = codecs.open('data/76.out','w')
+    for (X, Y) in zip(X_test, Y_test):
         a = sum([W[x] for x in X])
         predict = sigmoid(a)
         if predict >= 0.5:
-            Y_pred.append("+1")
+            f_out.write(Y+'\t'+'+1\t'+str(predict)+'\n')
         elif predict < 0.5:
-            Y_pred.append("-1")
-
-    TP, FP, FN = 0, 0, 0
-    for (pred_y, test_y) in zip(Y_pred, Y_test):
-        if pred_y == '+1' and test_y == '+1':
-            TP += 1
-        elif pred_y == '-1' and test_y == '+1':
-            FN += 1
-        elif pred_y == '+1' and test_y == '-1':
-            FP += 1
-
-    precision = TP / (TP + FN)
-    recall = TP / (TP + FP)
-    f1_score = 2 / (1 / precision + 1 / recall)
-
-    print("precision:",precision,"\nrecall:",recall,"\nf1 score:",f1_score)
+            f_out.write(Y+'\t'+'-1\t'+str(1-predict)+'\n')
+    f_out.close()
