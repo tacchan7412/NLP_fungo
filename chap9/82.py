@@ -12,7 +12,7 @@ if __name__ == '__main__':
 
     f_out = codecs.open('data/82.txt', 'w')
     for line in lines:
-        words = line.split(' ')
+        words = line.split(' ')[:-1]
         for i, word in enumerate(words):
             window_size = random.randint(1, 5)
             window_list = list(range(-1*window_size, window_size + 1))
