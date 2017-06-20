@@ -28,8 +28,9 @@ if __name__ == '__main__':
         tc_list = line[:-1].split(' ')
         tc = int(tc_list[0])
         [t, c] = tc_list[1].split('\t')
-        X_tc = max(0, np.log(N) + np.log(tc) - np.log(t_dict[t]) - np.log(c_dict[c]))
-        f_out.write('%s\t%s\t%f\n' %(t, c, X_tc))
+        X_tc = np.log(N) + np.log(tc) - np.log(t_dict[t]) - np.log(c_dict[c])
+        if X_tc > 0:
+            f_out.write('%s\t%s\t%f\n' %(t, c, X_tc))
 
     f_tc10.close()
     f_t.close()
