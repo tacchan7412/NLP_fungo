@@ -14,6 +14,7 @@ if __name__ == '__main__':
             england_vec = np.array([float(x) for x in vec[1].split()])
             break
 
+    f = codecs.open('data/85.txt')
     similarity_dict = {}
     for line in f:
         vec = line.split('\t')
