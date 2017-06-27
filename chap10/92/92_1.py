@@ -27,10 +27,7 @@ if __name__ == '__main__':
         vec_dict[vec[0]] = np.array([float(x) for x in vec[1].split()])
 
     line = f.readline()
-    i = 0
     while line:
-        print(i)
-        i += 1
         words = line[:-1].split()
         if words[0] not in vec_dict or words[1] not in vec_dict or words[2] not in vec_dict:
             line = f.readline()
